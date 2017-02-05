@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Success Login </title>
+        <style>
+            table, th, td{
+            border: 1px solid black;
+            width: 500px;
+            }
+            h4{margin-right: 20px;}
+        </style>
+    </head>
+    <body>
+        <h1>Success! Welcome, {{loginuser.name}}!</h1>
+        <a href="/main/logout">logout</a>
+        <p>Here is a list of friends</p>
+        <table>
+          <tr>
+            <th>Alias</th>
+            <th>Action</th>
+          </tr>
+          {% for friend in friends %}
+          <tr>
+            <td>{{friend.alias}}</td>
+            <td><a href="/main/user/{{friend.id}}">View Profile</a></td>
+            <td><a href="/delete/{{friend.id}}">Remove as Friend</a>
+          </tr>
+          {% endfor %}
+        </table>
+        <p>Other users not on your friend's list</p>
+        <table>
+          <tr>
+            <th>Alias</th>
+            <th>Action</th>
+          </tr>
+          {% for notfriend in notfriends %}
+          <tr>
+            <td><a href="/main/user/{{notfriend.id}}">{{notfriend.alias}}</a></td>
+            <td><form action="/main/user/{{notfriend.id}}" method="post">
+              {% csrf_token %}
+              <input type="submit" name="" value="Add as friend">
+            </form>
+            </td>
+
+          </tr>
+          {% endfor %}
+        </table>
+
+    </body>
+</html>
